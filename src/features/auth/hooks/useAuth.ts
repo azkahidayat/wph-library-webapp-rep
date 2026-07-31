@@ -10,7 +10,7 @@ export const useLogin = () => {
     mutationFn: login,
     onSuccess: (result) => {
       useAuthStore.getState().login(result.data.token, result.data.user);
-      toast.success(result.message);
+      toast.success(`${result.message} successfully`);
     },
     onError: (error: AxiosError<ErrorResponse>) => {
       toast.error(error.response?.data.message ?? 'Something went wrong');

@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
         element: <UserCategoryPage />,
       },
       {
-        path: '/books/author/:author',
+        path: '/authors/:id/books',
         element: <UserBookByAuthorPage />,
       },
       {

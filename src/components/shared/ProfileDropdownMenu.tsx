@@ -17,13 +17,21 @@ interface ProfileDropdownMenuProps {
   user: User;
 }
 
+type Tab = 'profile' | 'borrowed-list' | 'reviews';
+
 const ProfileDropdownMenu = ({ user }: ProfileDropdownMenuProps) => {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
 
+  const handleTabClick = (tab: Tab) => {
+    const params = new URLSearchParams();
+    params.set('tab', tab);
+    navigate(`/profile?${params.toString()}`);
+  };
+
   const handleLogoutClick = () => {
     navigate('/auth/login');
-    toast.success('Logged out');
+    toast.success('Logged out successfully');
     setTimeout(() => {
       logout();
     }, 300);
@@ -33,7 +41,7 @@ const ProfileDropdownMenu = ({ user }: ProfileDropdownMenuProps) => {
       <DropdownMenuTrigger asChild>
         <button
           type='button'
-          className='group flex gap-4 cursor-pointer items-center'
+          className='group flex gap-4 cursor-pointer items-center focus:outline-0'
         >
           {user.profilePhoto ? (
             <div className='size-10 lg:size-12 aspect-square shrink-0 rounded-full overflow-hidden'>
@@ -58,9 +66,15 @@ const ProfileDropdownMenu = ({ user }: ProfileDropdownMenuProps) => {
 
       <DropdownMenuContent>
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Borrowed List</DropdownMenuItem>
-          <DropdownMenuItem>Reviews</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleTabClick('profile')}>
+            Profile
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleTabClick('borrowed-list')}>
+            Borrowed List
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => handleTabClick('reviews')}>
+            Reviews
+          </DropdownMenuItem>
           <DropdownMenuItem
             className='text-[#EE1D52]'
             onClick={handleLogoutClick}

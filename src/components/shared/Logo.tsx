@@ -1,7 +1,15 @@
 import logo from '@/assets/images/logo.svg';
+import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
-const Logo = () => {
+interface LogoProps {
+  className?: string;
+}
+
+const Logo = ({ className }: LogoProps) => {
+  const navigate = useNavigate();
   const handleClick = () => {
+    navigate('/');
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -10,7 +18,10 @@ const Logo = () => {
   return (
     <div
       onClick={handleClick}
-      className='flex w-fit lg:w-auto items-center cursor-pointer gap-3.75'
+      className={cn(
+        'flex w-fit lg:w-auto items-center cursor-pointer gap-3.75',
+        className
+      )}
     >
       <div className='size-8.25 shrink-0'>
         <img src={logo} alt='Logo' />

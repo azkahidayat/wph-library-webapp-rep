@@ -8,26 +8,45 @@ import { useEffect, useState } from 'react';
 import { SearchIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import MobileSearchField from '../shared/MobileSearchField';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
     const handleResize = () => {
       setIsSearchOpen(false);
     };
 
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
     return () => {
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
+  const handleCartClick = () => {
+    navigate('/cart');
+  };
+
   return (
-    <header className='relative flex justify-between items-center gap-4 h-20'>
+    <header
+      className={cn(
+        'sticky top-0 flex justify-between items-center gap-4 h-20 shadow-soft z-20 px-4 lg:px-30 m-auto',
+        isScrolled && 'backdrop-blur-lg'
+      )}
+    >
       <Logo />
       {token && <SearchField className='hidden md:block' />}
 
@@ -38,7 +57,9 @@ const Navbar = () => {
             onClick={() => setIsSearchOpen(true)}
           />
 
-          <FaShoppingBag className='size-6' />
+          <div className='relative cursor-pointer' onClick={handleCartClick}>
+            <FaShoppingBag className='size-6 cus' />
+          </div>
           <Avatar user={user} />
         </div>
       )}
