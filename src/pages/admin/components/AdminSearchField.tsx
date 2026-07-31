@@ -27,7 +27,7 @@ const AdminSearchField = ({ className }: ProfileSearchFieldProps) => {
     } else {
       params.delete('q');
     }
-
+    params.delete('page');
     setSearchParams(params);
   };
   return (

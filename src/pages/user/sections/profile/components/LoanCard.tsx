@@ -51,7 +51,10 @@ const LoanCard = ({ loans }: LoanCardProps) => {
       <HorizontalLine />
       <div className='flex flex-col gap-6 sm:flex-row sm:justify-between'>
         <div className='flex gap-4 items-center'>
-          <div className='w-23 h-34.5 shrink-0'>
+          <div
+            className='w-23 h-34.5 shrink-0'
+            onClick={() => handleLoanCardClick(loan.book.id)}
+          >
             <img
               src={loan.book.coverImage}
               alt={`${loan.book.title} cover`}
@@ -77,7 +80,7 @@ const LoanCard = ({ loans }: LoanCardProps) => {
             </p>
           </div>
         </div>
-        <ReviewDialog bookId={loan.book.id} />
+        {loan.status === 'RETURNED' && <ReviewDialog bookId={loan.book.id} />}
       </div>
     </div>
   ));

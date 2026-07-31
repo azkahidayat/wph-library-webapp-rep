@@ -1,7 +1,7 @@
 import Container from '@/components/layouts/Container';
 import { cn } from '@/lib/utils';
 import { useSearchParams } from 'react-router-dom';
-import UsersTable from './components/UsersTable';
+import UsersList from './components/UserList';
 
 type AdminDashboardTabSlugs = 'borrowed-list' | 'user' | 'book-list';
 
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
             );
           })}
         </div>
-        <UsersTable />
+        <UsersList />
       </section>
     </Container>
   );

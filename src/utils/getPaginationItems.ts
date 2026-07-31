@@ -11,14 +11,22 @@ export function getPaginationItems(
 
   // Halaman awal
   if (currentPage <= 2) {
-    return [1, 2, 3, '...'];
+    return [1, 2, 3, '...', totalPages];
   }
 
   // Halaman akhir
   if (currentPage >= totalPages - 1) {
-    return ['...', totalPages - 2, totalPages - 1, totalPages];
+    return [1, '...', totalPages - 2, totalPages - 1, totalPages];
   }
 
   // Halaman tengah
-  return ['...', currentPage - 1, currentPage, currentPage + 1, '...'];
+  return [
+    1,
+    '...',
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    '...',
+    totalPages,
+  ];
 }

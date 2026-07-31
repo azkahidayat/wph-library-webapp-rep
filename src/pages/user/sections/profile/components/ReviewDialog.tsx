@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { useAddMyReview } from '@/features/profile/hooks/useMyReview';
 import {
   reviewSchema,
   type ReviewSchema,
@@ -17,6 +18,7 @@ interface ReviewDialogProps {
 }
 
 const ReviewDialog = ({ bookId }: ReviewDialogProps) => {
+  const { mutate, isPending } = useAddMyReview();
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, control, setValue, reset } =
     useForm<ReviewSchema>({
@@ -44,9 +46,12 @@ const ReviewDialog = ({ bookId }: ReviewDialogProps) => {
       toast.error('Please rate');
       return;
     }
-
-    reset();
-    setOpen(false);
+    mutate(reviewPayload, {
+      onSuccess: () => {
+        reset();
+        setOpen(false);
+      },
+    });
   };
 
   return (
@@ -100,7 +105,9 @@ const ReviewDialog = ({ bookId }: ReviewDialogProps) => {
             />
           </div>
 
-          <Button type='submit'>Send</Button>
+          <Button type='submit' disabled={isPending}>
+            {isPending ? 'Sending...' : 'Send'}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

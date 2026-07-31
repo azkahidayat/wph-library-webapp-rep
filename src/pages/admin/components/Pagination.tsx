@@ -19,24 +19,24 @@ const Pagination = ({
   onPageChange,
 }: PaginationProps) => {
   const start = (page - 1) * limit + 1;
-  const end = Math.min(page * limit, totalPages);
+  const end = Math.min(page * limit, totalEntries);
   const paginationItems = getPaginationItems(page, totalPages);
   return (
     <div className='flex justify-between items-center'>
-      <p className='font-medium text-md'>
+      <p className='font-medium text-md hidden md:block'>
         Showing {start} to {end} of {totalEntries} entries
       </p>
-      <div className='flex justify-between gap-4'>
+      <div className='flex justify-between gap-4 w-full md:w-fit'>
         <Button
           variant='ghost'
-          className='font-medium text-md flex items-center gap-[6px]'
+          className='font-medium text-md flex items-center gap-[6px] p-0'
           disabled={page <= 1}
           onClick={() => onPageChange(page - 1)}
         >
           <FaChevronLeft />
           Prev
         </Button>
-        <div className='flex gap-1 items-center'>
+        <div className='flex md:gap-1 items-center'>
           {paginationItems.map((item, index) => {
             if (item === '...') {
               return (
@@ -65,7 +65,7 @@ const Pagination = ({
         </div>
         <Button
           variant='ghost'
-          className='font-medium text-md flex items-center gap-[6px]'
+          className='font-medium text-md flex items-center gap-[6px] p-0'
           disabled={page >= totalPages}
           onClick={() => onPageChange(page + 1)}
         >

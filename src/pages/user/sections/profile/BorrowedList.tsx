@@ -13,7 +13,7 @@ import LoadMoreButton from '@/components/shared/LoadMoreButton';
 const isLoanStatus = (value: string | null): value is LoanFilterStatus => {
   return (
     value === 'all' ||
-    value === 'borrowed' ||
+    value === 'active' ||
     value === 'returned' ||
     value === 'overdue'
   );
