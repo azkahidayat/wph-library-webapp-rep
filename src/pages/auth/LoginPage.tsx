@@ -33,7 +33,6 @@ const LoginPage = () => {
         if (user?.role === 'ADMIN') {
           navigate('/admin');
         } else {
-          console.log('role bukan admin');
           navigate('/');
         }
       },

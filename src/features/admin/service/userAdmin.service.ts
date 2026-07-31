@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios';
 import type { ApiResponse } from '@/types';
-import type { GetUsersData } from '../types/user';
+import type { GetUsersData } from '../types/admin-user';
 import type { BooksData } from '@/features/book/types/book';
 
 export interface GetUsersDataParams {

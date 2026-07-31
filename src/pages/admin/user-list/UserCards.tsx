@@ -1,4 +1,4 @@
-import type { AdminUser } from '@/features/admin/types/user';
+import type { AdminUser } from '@/features/admin/types/admin-user';
 import { formatDateTime } from '@/utils/formate-date';
 
 interface UserCardsProps {

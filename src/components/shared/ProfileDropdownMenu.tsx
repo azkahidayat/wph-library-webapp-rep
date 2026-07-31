@@ -14,6 +14,7 @@ import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from '../ui/skeleton';
 import { useQueryClient } from '@tanstack/react-query';
+import { useCartStore } from '@/features/cart/store/useCartStore';
 
 interface ProfileDropdownMenuProps {
   user: User;
@@ -25,6 +26,7 @@ export type TabSlug = 'profile' | 'borrowed-list' | 'reviews';
 const ProfileDropdownMenu = ({ user, isLoading }: ProfileDropdownMenuProps) => {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
+  const clearCart = useCartStore((state) => state.deleteAllItemIds);
   const queryClient = useQueryClient();
   const role = useAuthStore((state) => state.user?.role);
 
@@ -35,11 +37,13 @@ const ProfileDropdownMenu = ({ user, isLoading }: ProfileDropdownMenuProps) => {
   };
 
   const handleLogoutClick = () => {
-    navigate('/auth/login');
+    navigate('/auth/login', { replace: true });
+
     toast.success('Logged out successfully');
     setTimeout(() => {
       logout();
       queryClient.clear();
+      clearCart();
     }, 300);
   };
   return (

@@ -40,8 +40,6 @@ const ReviewDialog = ({ bookId }: ReviewDialogProps) => {
       bookId,
     };
 
-    console.log(reviewPayload);
-
     if (data.star === 0) {
       toast.error('Please rate');
       return;

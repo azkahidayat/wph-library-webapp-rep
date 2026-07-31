@@ -1,7 +1,7 @@
 import type { BookListItemData } from '@/components/shared/BookListItem';
 import BookListItem from '@/components/shared/BookListItem';
 import HorizontalLine from '@/components/shared/HorizontalLine';
-import type { MyReview } from '@/features/profile/types/myreviews';
+import type { MyReview } from '@/features/profile/types/my-reviews';
 import { formatDateTime } from '@/utils/formate-date';
 import { TiStarFullOutline } from 'react-icons/ti';
 import { useNavigate } from 'react-router-dom';

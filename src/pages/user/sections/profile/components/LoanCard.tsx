@@ -1,12 +1,13 @@
 import HorizontalLine from '@/components/shared/HorizontalLine';
-import type { MyLoan } from '@/features/profile/types/myloan';
+import type { MyLoan } from '@/features/profile/types/my-loan';
 import { cn } from '@/lib/utils';
 import { formatDate } from '@/utils/formate-date';
 import ReviewDialog from './ReviewDialog';
 import { useNavigate } from 'react-router-dom';
+import type { AdminLoan } from '@/features/admin/types/admin-loan';
 
 interface LoanCardProps {
-  loans: MyLoan[];
+  loans: MyLoan[] | AdminLoan[];
 }
 
 const LoanCard = ({ loans }: LoanCardProps) => {
@@ -80,8 +81,19 @@ const LoanCard = ({ loans }: LoanCardProps) => {
             </p>
           </div>
         </div>
-        {loan.status === 'RETURNED' && <ReviewDialog bookId={loan.book.id} />}
+        {loan.status === 'RETURNED' && !('borrower' in loan) && (
+          <ReviewDialog bookId={loan.book.id} />
+        )}
       </div>
+      {'borrower' in loan && (
+        <>
+          <HorizontalLine />
+          <div>
+            <p className='font-semibold text-sm lg:text-md'>borrower's name</p>
+            <p className='font-bold text-md lg:text-xl'>{loan.borrower.name}</p>
+          </div>
+        </>
+      )}
     </div>
   ));
 };

@@ -4,7 +4,7 @@ import type {
   AddMyReviewData,
   DeleteMyReviewData,
   MyReviewsData,
-} from '../types/myreviews';
+} from '../types/my-reviews';
 
 interface AddMyReviewPayload {
   bookId: number;

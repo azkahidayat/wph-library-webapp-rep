@@ -11,13 +11,13 @@ import Description from './Description';
 import UploadImage from './UploadImage';
 import type { BookAdminPayload } from '@/features/admin/service/bookAdmin.service';
 
-interface InitialValueData {
-  title: string;
-  isbn: string;
-  categoryId: number;
-  publishedYear: number;
-  authorName?: string;
-  description?: string;
+export interface InitialValueData {
+  title: string | undefined;
+  isbn: string | undefined;
+  categoryId: number | undefined;
+  publishedYear: number | undefined;
+  authorName: string | undefined;
+  description: string | undefined;
   authorId?: number;
   availableCopies?: number;
   totalCopies?: number;
@@ -31,6 +31,7 @@ interface FormProps {
 }
 
 const Form = ({ initialValueData, isPending, onSubmitBook }: FormProps) => {
+  console.log(initialValueData?.authorName);
   const form = useForm({
     defaultValues: {
       title: initialValueData?.title ?? '',
@@ -38,12 +39,6 @@ const Form = ({ initialValueData, isPending, onSubmitBook }: FormProps) => {
       isbn: initialValueData?.isbn ?? '',
       publishedYear: initialValueData?.publishedYear ?? undefined,
       description: initialValueData?.description ?? '',
-      // title: 'History of Three Hundred',
-      // authorName: 'Hary300',
-      // isbn: '978-0123456789',
-      // publishedYear: 2024,
-      // description:
-      // 'An in-depth historical account detailing three hundred years of cultural evolution, societal shifts, and monumental achievements. Perfect for history enthusiasts and scholars seeking a comprehensive overview of a key historical era.',
       categoryId: initialValueData?.categoryId ?? '',
       authorId: initialValueData?.authorId ?? undefined,
       availableCopies: initialValueData?.availableCopies ?? 0,

@@ -1,6 +1,6 @@
 import { api } from '@/lib/axios';
 import type { ApiResponse } from '@/types';
-import type { LoanData } from '../types/myloan';
+import type { LoanData } from '../types/my-loan';
 
 export type LoanFilterStatus = 'all' | 'active' | 'returned' | 'overdue';
 

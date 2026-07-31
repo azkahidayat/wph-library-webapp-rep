@@ -8,6 +8,20 @@ import {
 import { IoIosMore } from 'react-icons/io';
 import { useSearchParams } from 'react-router-dom';
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { useDeleteBookForAdmin } from '@/features/admin/hooks/useBookForAdmin';
+import { useState } from 'react';
+
 interface AdminActionButtonsProps {
   bookId: number;
 }
@@ -16,6 +30,9 @@ export type Actions = 'preview' | 'edit' | 'add' | 'delete';
 
 const AdminActionButtons = ({ bookId }: AdminActionButtonsProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [openDeleteMobileDialog, setOpenDeleteMobileDialog] = useState(false);
+  const [openMobileDropDown, setOpenMobileDropDown] = useState(false);
+  const { mutate, isPending } = useDeleteBookForAdmin();
 
   const handleActionClick = (action: Actions, bookId: number) => {
     const params = new URLSearchParams(searchParams);
@@ -24,6 +41,11 @@ const AdminActionButtons = ({ bookId }: AdminActionButtonsProps) => {
     params.delete('status');
     setSearchParams(params);
   };
+
+  const handleDeleteBookClick = (bookId: number) => {
+    mutate(bookId);
+  };
+
   return (
     <>
       <div className='hidden md:flex justify-between items-center gap-3.25 w-full max-w-77.75'>
@@ -41,11 +63,44 @@ const AdminActionButtons = ({ bookId }: AdminActionButtonsProps) => {
         >
           Edit
         </Button>
-        <Button variant='outline' className='flex-1 text-[#EE1D52]'>
-          Delete
-        </Button>
+
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant='outline' className='flex-1 text-[#EE1D52]'>
+              Delete
+            </Button>
+          </AlertDialogTrigger>
+
+          <AlertDialogContent className='data-[size=default]:sm:max-w-113'>
+            <AlertDialogHeader>
+              <AlertDialogTitle className='font-bold text-lg'>
+                Delete Data
+              </AlertDialogTitle>
+              <AlertDialogDescription className='font-semibold text-md'>
+                Once deleted, you won’t be able to recover this data.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <div className='flex w-full gap-4 '>
+                <AlertDialogCancel className='px-4 flex-1'>
+                  No
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  className='px-4 flex-1 bg-red'
+                  onClick={() => handleDeleteBookClick(bookId)}
+                  disabled={isPending}
+                >
+                  {isPending ? 'Deleting...' : 'Delete'}
+                </AlertDialogAction>
+              </div>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
-      <DropdownMenu>
+      <DropdownMenu
+        open={openMobileDropDown}
+        onOpenChange={setOpenMobileDropDown}
+      >
         <DropdownMenuTrigger asChild>
           <Button
             variant='outline'
@@ -63,7 +118,53 @@ const AdminActionButtons = ({ bookId }: AdminActionButtonsProps) => {
           <DropdownMenuItem onClick={() => handleActionClick('edit', bookId)}>
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem className='text-[#EE1D52]'>Delete</DropdownMenuItem>
+          <AlertDialog
+            open={openDeleteMobileDialog}
+            onOpenChange={setOpenDeleteMobileDialog}
+          >
+            <AlertDialogTrigger asChild>
+              <DropdownMenuItem
+                className='text-[#EE1D52]'
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setOpenDeleteMobileDialog(true);
+                }}
+              >
+                Delete
+              </DropdownMenuItem>
+            </AlertDialogTrigger>
+
+            <AlertDialogContent className='data-[size=default]:sm:max-w-113'>
+              <AlertDialogHeader>
+                <AlertDialogTitle className='font-bold text-lg'>
+                  Delete Data
+                </AlertDialogTitle>
+                <AlertDialogDescription className='font-semibold text-md'>
+                  Once deleted, you won’t be able to recover this data.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <div className='flex w-full gap-4 '>
+                  <AlertDialogCancel
+                    className='px-4 flex-1'
+                    onClick={() => setOpenMobileDropDown(false)}
+                  >
+                    No
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    className='px-4 flex-1 bg-red'
+                    onClick={() => {
+                      handleDeleteBookClick(bookId);
+                      setOpenMobileDropDown(false);
+                    }}
+                    disabled={isPending}
+                  >
+                    {isPending ? 'Deleting...' : 'Delete'}
+                  </AlertDialogAction>
+                </div>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

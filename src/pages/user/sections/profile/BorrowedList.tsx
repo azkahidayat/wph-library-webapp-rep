@@ -18,7 +18,8 @@ const isLoanStatus = (value: string | null): value is LoanFilterStatus => {
     value === 'overdue'
   );
 };
-interface LoanFilter {
+
+export interface LoanFilter {
   label: string;
   value: LoanFilterStatus;
 }
