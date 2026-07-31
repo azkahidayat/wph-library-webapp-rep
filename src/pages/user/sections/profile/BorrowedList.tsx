@@ -24,7 +24,7 @@ interface LoanFilter {
 }
 
 const BorrowedList = () => {
-  const [searchParams, setSearchparams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const status = searchParams.get('status');
   const query = searchParams.get('q') ?? undefined;
@@ -51,7 +51,7 @@ const BorrowedList = () => {
 
     params.set('page', '1');
 
-    setSearchparams(`?${params.toString()}`);
+    setSearchParams(`?${params.toString()}`);
   };
 
   const loans = data?.pages.flatMap((page) => page.data.loans) ?? [];

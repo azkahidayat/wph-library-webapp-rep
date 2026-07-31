@@ -1,10 +1,10 @@
 import { useGetUsersData } from '@/features/admin/hooks/useGetUsersData';
 import { useSearchParams } from 'react-router-dom';
-import AdminSearchField from './AdminSearchField';
 import { Skeleton } from '@/components/ui/skeleton';
-import UserCards from './UserCards';
+import AdminSearchField from '../components/shared/AdminSearchField';
 import UserTable from './UserTable';
 import Pagination from './Pagination';
+import UserCards from './UserCards';
 
 const UsersList = () => {
   const [searchParams, setSearchParams] = useSearchParams();

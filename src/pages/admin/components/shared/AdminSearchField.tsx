@@ -40,7 +40,7 @@ const AdminSearchField = ({ className }: ProfileSearchFieldProps) => {
           type='text'
           {...register('query')}
           placeholder='Search book'
-          className='border rounded-full pl-9.5 lg:pl-10.5 h-10 w-full focus:outline-0 focus:placeholder:opacity-0'
+          className='border rounded-full pl-9.5 lg:pl-10.5 h-10 lg:h-12 w-full focus:outline-0 focus:placeholder:opacity-0'
         />
         <SearchIcon className='absolute top-1/2 -translate-y-1/2 left-3 lg:left-4 size-5 text-neutral-600' />
       </div>
