@@ -3,11 +3,12 @@ import ProfileDropdownMenu from './ProfileDropdownMenu';
 
 interface AvatarProps {
   user: User;
+  isLoading: boolean;
 }
-const Avatar = ({ user }: AvatarProps) => {
+const Avatar = ({ user, isLoading }: AvatarProps) => {
   return (
     <div className='flex lg:gap-4'>
-      <ProfileDropdownMenu user={user} />
+      <ProfileDropdownMenu user={user} isLoading={isLoading} />
     </div>
   );
 };

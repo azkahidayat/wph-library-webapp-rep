@@ -12,18 +12,20 @@ import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/features/auth/store/useAuthStore';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
+import { Skeleton } from '../ui/skeleton';
 
 interface ProfileDropdownMenuProps {
   user: User;
+  isLoading: boolean;
 }
 
-type Tab = 'profile' | 'borrowed-list' | 'reviews';
+export type TabSlug = 'profile' | 'borrowed-list' | 'reviews';
 
-const ProfileDropdownMenu = ({ user }: ProfileDropdownMenuProps) => {
+const ProfileDropdownMenu = ({ user, isLoading }: ProfileDropdownMenuProps) => {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
 
-  const handleTabClick = (tab: Tab) => {
+  const handleTabClick = (tab: TabSlug) => {
     const params = new URLSearchParams();
     params.set('tab', tab);
     navigate(`/profile?${params.toString()}`);
@@ -43,9 +45,15 @@ const ProfileDropdownMenu = ({ user }: ProfileDropdownMenuProps) => {
           type='button'
           className='group flex gap-4 cursor-pointer items-center focus:outline-0'
         >
-          {user.profilePhoto ? (
+          {isLoading ? (
+            <Skeleton className='size-10 lg:size-12 aspect-square shrink-0 rounded-full' />
+          ) : user.profilePhoto ? (
             <div className='size-10 lg:size-12 aspect-square shrink-0 rounded-full overflow-hidden'>
-              <img src={user.profilePhoto} alt={`${user.name} avatar`} />
+              <img
+                src={user.profilePhoto}
+                alt={`${user.name} avatar`}
+                className='size-full object-cover object-center'
+              />
             </div>
           ) : (
             <div className='border rounded-full aspect-square shrink-0 size-10 lg:size-12 flex justify-center items-center'>

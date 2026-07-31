@@ -1,5 +1,5 @@
 import DatePicker from './DatePicker';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import {
   borrowSchema,
   type BorrowSchema,
@@ -8,12 +8,13 @@ import type { ConfirmAndBorrowPayload } from '@/features/checkout/service/borrow
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import BorrowDuration from './BorrowDuration';
-import { format } from 'date-fns';
+import { addDays, format } from 'date-fns';
 import { useConfirmAndBorrow } from '@/features/checkout/hooks/useBorrow';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import type { ErrorResponse } from '@/types';
 import { toast } from 'sonner';
+import { useBorrowStore } from '@/features/checkout/store/useBorrowStore';
 
 interface BorrowRequestProps {
   itemIds: number[];
@@ -32,15 +33,34 @@ const BorrowRequest = ({ itemIds }: BorrowRequestProps) => {
     resolver: zodResolver(borrowSchema),
   });
 
+  const addDueDate = useBorrowStore((state) => state.addDueDate);
+
+  const borrowDate = useWatch({
+    control: form.control,
+    name: 'borrowDate',
+  });
+
+  const days = useWatch({
+    control: form.control,
+    name: 'days',
+  });
+
   const onSubmit = (data: BorrowSchema) => {
     const confirmAnddBorrowPayload: ConfirmAndBorrowPayload = {
       itemIds: itemIds,
       days: Number(data.days),
       borrowDate: data.borrowDate,
     };
-    console.log(confirmAnddBorrowPayload);
     mutate(confirmAnddBorrowPayload, {
       onSuccess: () => {
+        const dueDate =
+          borrowDate && days
+            ? format(
+                addDays(new Date(borrowDate), Number(days)),
+                'dd MMMM yyyy'
+              )
+            : '';
+        addDueDate(dueDate);
         navigate('/checkout/success');
       },
       onError: (error) => {

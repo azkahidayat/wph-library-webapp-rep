@@ -10,10 +10,11 @@ import { cn } from '@/lib/utils';
 import MobileSearchField from '../shared/MobileSearchField';
 import { Link, useNavigate } from 'react-router-dom';
 import { useGetMyCart } from '@/features/cart/hooks/useCart';
+import { useGetProfile } from '@/features/profile/hooks/useProfile';
 
 const Navbar = () => {
   const token = useAuthStore((state) => state.token);
-  const user = useAuthStore((state) => state.user);
+  const { data: profileResponse, isLoading: profileLoading } = useGetProfile();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Navbar = () => {
   };
 
   const totalBooksInMyCart = cartResponse?.data.itemCount ?? 0;
-
+  const userProfile = profileResponse?.data.profile;
   return (
     <header
       className={cn(
@@ -54,7 +55,7 @@ const Navbar = () => {
       <Logo />
       {token && <SearchField className='hidden md:block' />}
 
-      {token && user && !isSearchOpen && (
+      {token && userProfile && !isSearchOpen && (
         <div className='absolute md:static top-1/2 md:top-auto md:translate-y-0 md:right-auto -translate-y-1/2 right-4 flex gap-4 lg:gap-6 items-center'>
           <SearchIcon
             className={cn('cursor-pointer md:hidden')}
@@ -71,7 +72,7 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          <Avatar user={user} />
+          <Avatar user={userProfile} isLoading={profileLoading} />
         </div>
       )}
 

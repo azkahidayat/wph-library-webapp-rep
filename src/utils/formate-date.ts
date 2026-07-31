@@ -19,13 +19,25 @@ export const formatDateTime = (date: string) =>
     hour12: false,
   });
 
-export const formatDate = (date: Date | undefined) => {
+interface FormDateParams {
+  date: Date | undefined | string;
+  month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow';
+}
+
+export const formatDate = ({ date, month = 'long' }: FormDateParams) => {
   if (!date) {
     return '';
   }
+  if (typeof date === 'string') {
+    return new Date(date).toLocaleDateString('id-ID', {
+      day: '2-digit',
+      month: month,
+      year: 'numeric',
+    });
+  }
   return date.toLocaleDateString('id-ID', {
     day: '2-digit',
-    month: 'long',
+    month: month,
     year: 'numeric',
   });
 };

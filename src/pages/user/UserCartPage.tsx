@@ -60,7 +60,10 @@ const UserCartPage = () => {
   const totalBooks = selectedItemIds.length;
   return (
     <Container>
-      <section id='cart' className='relative flex flex-col gap-5 lg:gap-10'>
+      <section
+        id='cart'
+        className='relative flex flex-col gap-5 lg:gap-10 max-w-250 m-auto w-full'
+      >
         <h2 className='font-bold text-display-xs lg:text-display-lg'>
           My Cart
         </h2>
@@ -104,7 +107,7 @@ const UserCartPage = () => {
                         />
                         <label
                           htmlFor={item.book.title}
-                          className='flex gap-3 lg:gap-4 items-center'
+                          className='flex gap-3 lg:gap-4 items-center cursor-pointer'
                         >
                           <BookListItem bookListItemData={booListItemData} />
                         </label>
