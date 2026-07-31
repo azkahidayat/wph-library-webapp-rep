@@ -8,6 +8,7 @@ import type { GetAllBooksParams } from '@/features/book/service/book.service';
 import LoadMoreButton from '@/components/shared/LoadMoreButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import EmptyState from '@/components/shared/EmptyState';
+import MobileFilter from './sections/category/MobileFilter';
 
 const UserCategoryPage = () => {
   const [searchParam] = useSearchParams();
@@ -44,11 +45,12 @@ const UserCategoryPage = () => {
         <h2 className='font-bold text-display-xs lg:text-display-lg'>
           Book List
         </h2>
-        <div className='flex lg:gap-10'>
+        <div className='flex flex-col gap-4 md:flex-row lg:gap-10'>
+          <MobileFilter />
           <SideBar />
           {isLoading ? (
             <div className='relative pb-15 lg:pb-22 w-full'>
-              <div className='grid gap-4 lg:gap-5 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 w-full'>
+              <div className='grid gap-4 lg:gap-5 grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 w-full'>
                 {Array.from({ length: 8 }).map((_, index) => (
                   <Skeleton key={index} className='h-90 lg:h-100' />
                 ))}
@@ -60,7 +62,7 @@ const UserCategoryPage = () => {
             <div className='relative pb-15 lg:pb-22'>
               <BooksGrid
                 books={books}
-                className='lg:grid-cols-3 xl:grid-cols-4'
+                className='md:grid-cols-3 xl:grid-cols-4'
               />
               <LoadMoreButton
                 hasNextPage={hasNextPage}

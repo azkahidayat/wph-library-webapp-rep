@@ -22,7 +22,9 @@ const BookActionButtons = ({
     mutate({ bookId: id });
   };
 
-  const handleBorrowBookClick = () => {
+  const handleBorrowBookClick = (id: number | undefined) => {
+    if (!id) return;
+    mutate({ bookId: id });
     navigate('/cart');
   };
 
@@ -47,7 +49,7 @@ const BookActionButtons = ({
       <Button
         className='w-[48%]'
         disabled={availableCopies === 0}
-        onClick={handleBorrowBookClick}
+        onClick={() => handleBorrowBookClick(id)}
       >
         Borrow Book
       </Button>

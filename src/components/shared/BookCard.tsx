@@ -21,7 +21,7 @@ const BookCard = ({ bookDataCard }: BookCardProps) => {
   };
   return (
     <div
-      className='shadow-soft flex flex-col rounded-xl overflow-hidden hover-lift'
+      className='shadow-soft flex flex-col rounded-xl overflow-hidden hover-lift '
       onClick={() => handleCardClick(bookDataCard.id)}
     >
       <div className='h-64.5 overflow-hidden'>

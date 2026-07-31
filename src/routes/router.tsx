@@ -1,5 +1,6 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
 import AuthLayout from '@/components/layouts/AuthLayout';
+import SuccessLayout from '@/components/layouts/SuccessLayout';
 import UserLayout from '@/components/layouts/UserLayout';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import LoginPage from '@/pages/auth/LoginPage';
@@ -55,13 +56,19 @@ export const router = createBrowserRouter([
         path: '/cart/checkout',
         element: <UserCheckoutPage />,
       },
-      {
-        path: '/checkout/success',
-        element: <UserSuccessPage />,
-      },
+
       {
         path: '/profile',
         element: <UserProfilePage />,
+      },
+    ],
+  },
+  {
+    element: <SuccessLayout />,
+    children: [
+      {
+        path: '/checkout/success',
+        element: <UserSuccessPage />,
       },
     ],
   },

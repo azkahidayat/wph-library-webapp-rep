@@ -31,7 +31,7 @@ const SideBar = () => {
     setSearchParams(new URLSearchParams());
   };
   return (
-    <div className='hidden py-4 lg:flex flex-col gap-6 max-w-66.5 shrink-0 w-full'>
+    <div className='hidden py-4 md:flex flex-col gap-6 max-w-66.5 shrink-0 w-full'>
       <div className='flex flex-col gap-2.5 px-4'>
         <div className='flex justify-between'>
           <p className='font-bold text-md'>FILTER</p>

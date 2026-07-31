@@ -13,6 +13,9 @@ import { useCartStore } from '@/features/cart/store/useCartStore';
 import BookListItem, {
   type BookListItemData,
 } from '@/components/shared/BookListItem';
+import { toast } from 'sonner';
+import type { ErrorResponse } from '@/types';
+import axios from 'axios';
 
 const UserCartPage = () => {
   const { data, isLoading, error } = useGetMyCart();
@@ -26,7 +29,16 @@ const UserCartPage = () => {
   const items = data?.data.items ?? [];
 
   const handleDeleteClick = (itemId: number) => {
-    mutate(itemId);
+    mutate(itemId, {
+      onSuccess: (result) => {
+        toast.success(result.message);
+      },
+      onError: (error) => {
+        if (axios.isAxiosError<ErrorResponse>(error))
+          toast.error(error.response?.data.message ?? 'Something went wrong');
+      },
+    });
+    deleteItemId(itemId);
   };
 
   const handleSelectBook = (checked: boolean, itemId: number) => {
@@ -109,7 +121,7 @@ const UserCartPage = () => {
                 })}
               </div>
             ) : (
-              <EmptyState className='h-50' />
+              <EmptyState className='h-50'>Cart is empty</EmptyState>
             )}
           </div>
           <LoanSummary totalBook={totalBooks} />

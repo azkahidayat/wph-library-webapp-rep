@@ -37,14 +37,10 @@ export const useDeleteOneItemFromCart = () => {
 
   return useMutation({
     mutationFn: deleteOneItemFromCart,
-    onSuccess: (result) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['cart'],
       });
-      toast.success(result.message);
-    },
-    onError: (error: AxiosError<ErrorResponse>) => {
-      toast.error(error.response?.data.message);
     },
   });
 };
