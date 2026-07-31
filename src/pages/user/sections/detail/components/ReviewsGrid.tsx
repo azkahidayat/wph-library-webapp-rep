@@ -1,3 +1,4 @@
+import EmptyState from '@/components/shared/EmptyState';
 import LoadMoreButton from '@/components/shared/LoadMoreButton';
 import ReviewCard from '@/components/shared/ReviewCard';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -29,7 +30,7 @@ const ReviewsGrid = () => {
         <Skeleton className='absolute bottom-0 rounded-full w-50 h-12 left-1/2 -translate-x-1/2' />
       </div>
     );
-  return (
+  return reviews.length > 0 ? (
     <div className='relative pb-14.5 lg:pb-16.5'>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-4.5 lg:gap-5'>
         {reviews.map((review) => (
@@ -42,6 +43,8 @@ const ReviewsGrid = () => {
         onClick={() => fetchNextPage()}
       />
     </div>
+  ) : (
+    <EmptyState className='h-50'>No Review</EmptyState>
   );
 };
 

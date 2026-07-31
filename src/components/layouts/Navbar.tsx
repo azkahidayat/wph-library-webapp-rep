@@ -9,6 +9,7 @@ import { SearchIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import MobileSearchField from '../shared/MobileSearchField';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGetMyCart } from '@/features/cart/hooks/useCart';
 
 const Navbar = () => {
   const token = useAuthStore((state) => state.token);
@@ -16,6 +17,7 @@ const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+  const { data: cartResponse } = useGetMyCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +42,8 @@ const Navbar = () => {
     navigate('/cart');
   };
 
+  const totalBooksInMyCart = cartResponse?.data.itemCount ?? 0;
+
   return (
     <header
       className={cn(
@@ -59,6 +63,13 @@ const Navbar = () => {
 
           <div className='relative cursor-pointer' onClick={handleCartClick}>
             <FaShoppingBag className='size-6 cus' />
+            {totalBooksInMyCart > 0 && (
+              <div className='flex justify-center items-center rounded-full size-5 absolute -top-1.5 right-[-6px] bg-[#EE1D52]'>
+                <p className='font-bold text-[12px] text-white'>
+                  {totalBooksInMyCart}
+                </p>
+              </div>
+            )}
           </div>
           <Avatar user={user} />
         </div>

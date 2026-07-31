@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useAddBookToCart } from '@/features/cart/hooks/useCart';
 import { useNavigate } from 'react-router-dom';
 
 interface BookActionButtonsProps {
@@ -14,13 +15,15 @@ const BookActionButtons = ({
   isLoading,
 }: BookActionButtonsProps) => {
   const navigate = useNavigate();
+  const { mutate } = useAddBookToCart();
 
   const handleAddToCartClick = (id: number | undefined) => {
     if (!id) return;
-    console.log(id);
+    mutate({ bookId: id });
   };
+
   const handleBorrowBookClick = () => {
-    navigate('/cart/checkout');
+    navigate('/cart');
   };
 
   if (isLoading)

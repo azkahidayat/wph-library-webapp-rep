@@ -14,7 +14,6 @@ const RecommendedBookHome = () => {
     isFetchingNextPage,
   } = useRecommendedBooks();
 
-  console.log(data);
   const recommendedBooks = data?.pages.flatMap((page) => page.data.books) ?? [];
 
   return (

@@ -1,5 +1,5 @@
 import Container from '@/components/layouts/Container';
-import { useGetAllCategories } from '@/features/book/hooks/useCategories';
+import { useGetAllCategories } from '@/features/category/hooks/useCategories';
 import { useSearchParams } from 'react-router-dom';
 import SideBar from './sections/category/SideBar';
 import BooksGrid from '@/components/shared/BooksGrid';
@@ -17,6 +17,7 @@ const UserCategoryPage = () => {
     (category) => category.name.toLowerCase() === categoryName
   )?.id;
   const queries: GetAllBooksParams = {
+    q: searchParam.get('q') || undefined,
     categoryId: categoryId,
     minRating: Number(searchParam.get('minRating')) || undefined,
   };

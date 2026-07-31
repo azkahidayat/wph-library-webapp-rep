@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { SearchIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 interface Search {
   query: string;
@@ -10,6 +11,7 @@ interface SearchFieldProps {
   className?: string;
 }
 const SearchField = ({ className }: SearchFieldProps) => {
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm<Search>({
     defaultValues: {
       query: '',
@@ -17,7 +19,13 @@ const SearchField = ({ className }: SearchFieldProps) => {
   });
 
   const onSubmit = (data: Search) => {
-    console.log(data.query);
+    const params = new URLSearchParams();
+    if (data.query) {
+      params.set('q', data.query.trim());
+    } else {
+      params.delete('q');
+    }
+    navigate(`/books?${params.toString()}`);
   };
   return (
     <form

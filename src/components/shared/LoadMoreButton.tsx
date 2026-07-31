@@ -19,7 +19,7 @@ const LoadMoreButton = ({
         disabled={isFetchingNextPage || !hasNextPage}
         onClick={onClick}
       >
-        {isFetchingNextPage ? 'Loading' : 'Load more'}
+        {isFetchingNextPage ? 'Loading...' : 'Load more'}
       </Button>
     </div>
   );

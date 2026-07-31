@@ -12,6 +12,7 @@ import BookInfo, { type BookInfoData } from './components/BookInfo';
 import Description from './components/Description';
 import BookActionButtons from './components/BookActionButtons';
 import type { Book } from '@/features/book/types/book';
+import { CiImageOff } from 'react-icons/ci';
 
 interface DetailProps {
   bookDetail?: Book;
@@ -54,13 +55,17 @@ const Detail = ({ bookDetail, error, isLoading }: DetailProps) => {
         <div className='flex flex-col gap-9 md:flex-row  items-start'>
           {isLoading ? (
             <Skeleton className='w-[222.75px] h-[328.83px] lg:w-84.25 lg:h-124.5 rounded-none mx-auto shrink-0' />
-          ) : (
+          ) : bookDetail?.coverImage ? (
             <div className='w-[222.75px] h-[328.83px] lg:w-84.25 lg:h-124.5 shrink-0 bg-neutral-200 p-[5.29px] lg:p-2 mx-auto lg:mx-0'>
               <img
                 src={bookDetail?.coverImage}
                 alt={`${bookDetail?.title} image`}
                 className='size-full object-cover'
               />
+            </div>
+          ) : (
+            <div className='border w-[222.75px] h-[328.83px] lg:w-84.25 lg:h-124.5 shrink-0 flex  justify-center items-center mx-auto lg:mx-0'>
+              <CiImageOff className='size-10 text-neutral-400' />
             </div>
           )}
           <div className='flex flex-col gap-4 lg:gap-5 w-full'>
