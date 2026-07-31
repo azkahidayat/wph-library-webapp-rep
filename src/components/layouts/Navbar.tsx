@@ -14,6 +14,7 @@ import { useGetProfile } from '@/features/profile/hooks/useProfile';
 
 const Navbar = () => {
   const token = useAuthStore((state) => state.token);
+  const role = useAuthStore((state) => state.user?.role);
   const { data: profileResponse, isLoading: profileLoading } = useGetProfile();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,25 +54,32 @@ const Navbar = () => {
       )}
     >
       <Logo />
-      {token && <SearchField className='hidden md:block' />}
+      {token && role !== 'ADMIN' && <SearchField className='hidden md:block' />}
 
       {token && userProfile && !isSearchOpen && (
         <div className='absolute md:static top-1/2 md:top-auto md:translate-y-0 md:right-auto -translate-y-1/2 right-4 flex gap-4 lg:gap-6 items-center'>
-          <SearchIcon
-            className={cn('cursor-pointer md:hidden')}
-            onClick={() => setIsSearchOpen(true)}
-          />
+          {role !== 'ADMIN' && (
+            <>
+              <SearchIcon
+                className={cn('cursor-pointer md:hidden')}
+                onClick={() => setIsSearchOpen(true)}
+              />
 
-          <div className='relative cursor-pointer' onClick={handleCartClick}>
-            <FaShoppingBag className='size-6 cus' />
-            {totalBooksInMyCart > 0 && (
-              <div className='flex justify-center items-center rounded-full size-5 absolute -top-1.5 right-[-6px] bg-[#EE1D52]'>
-                <p className='font-bold text-[12px] text-white'>
-                  {totalBooksInMyCart}
-                </p>
+              <div
+                className='relative cursor-pointer'
+                onClick={handleCartClick}
+              >
+                <FaShoppingBag className='size-6 cus' />
+                {totalBooksInMyCart > 0 && (
+                  <div className='flex justify-center items-center rounded-full size-5 absolute -top-1.5 right-[-6px] bg-[#EE1D52]'>
+                    <p className='font-bold text-[12px] text-white'>
+                      {totalBooksInMyCart}
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
           <Avatar user={userProfile} isLoading={profileLoading} />
         </div>
       )}

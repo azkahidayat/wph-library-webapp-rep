@@ -14,6 +14,9 @@ import UserHomePage from '@/pages/user/UserHomePage';
 import UserProfilePage from '@/pages/user/UserProfilePage';
 import UserSuccessPage from '@/pages/user/UserSuccessPage';
 import { createBrowserRouter } from 'react-router-dom';
+import ProtectedRoutes from './ProtectedRoutes';
+import AdminRoute from './AdminRoute';
+import UserRoute from './UserRoute';
 
 export const router = createBrowserRouter([
   {
@@ -30,55 +33,80 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <UserLayout />,
+    element: <UserRoute />,
     children: [
       {
-        index: true,
-        element: <UserHomePage />,
+        element: <UserLayout />,
+        children: [
+          {
+            index: true,
+            element: <UserHomePage />,
+          },
+          {
+            path: '/books/:id',
+            element: <UserDetailBookPage />,
+          },
+          {
+            path: '/books',
+            element: <UserCategoryPage />,
+          },
+          {
+            path: '/authors/:id/books',
+            element: <UserBookByAuthorPage />,
+          },
+        ],
       },
+    ],
+  },
+  {
+    element: <ProtectedRoutes />,
+    children: [
       {
-        path: '/books/:id',
-        element: <UserDetailBookPage />,
-      },
-      {
-        path: '/books',
-        element: <UserCategoryPage />,
-      },
-      {
-        path: '/authors/:id/books',
-        element: <UserBookByAuthorPage />,
-      },
-      {
-        path: '/cart',
-        element: <UserCartPage />,
-      },
-      {
-        path: '/cart/checkout',
-        element: <UserCheckoutPage />,
-      },
+        element: <UserLayout />,
+        children: [
+          {
+            path: '/cart',
+            element: <UserCartPage />,
+          },
+          {
+            path: '/cart/checkout',
+            element: <UserCheckoutPage />,
+          },
 
-      {
-        path: '/profile',
-        element: <UserProfilePage />,
+          {
+            path: '/profile',
+            element: <UserProfilePage />,
+          },
+        ],
       },
     ],
   },
   {
-    element: <SuccessLayout />,
+    element: <ProtectedRoutes />,
     children: [
       {
-        path: '/checkout/success',
-        element: <UserSuccessPage />,
+        element: <SuccessLayout />,
+        children: [
+          {
+            path: '/checkout/success',
+            element: <UserSuccessPage />,
+          },
+        ],
       },
     ],
   },
   {
-    path: '/admin',
-    element: <AdminLayout />,
+    element: <AdminRoute />,
     children: [
       {
-        index: true,
-        element: <AdminDashboard />,
+        path: '/admin',
+        element: <AdminLayout />,
+        children: [
+          {
+            index: true,
+            element: <AdminDashboard />,
+          },
+        ],
       },
     ],
   },

@@ -33,7 +33,6 @@ const RegisterPage = () => {
       phone: data.phone,
       password: data.password,
     };
-    console.log(registerPayload);
     mutate(registerPayload);
     setTimeout(() => {
       navigate('/auth/login');

@@ -5,7 +5,7 @@ const AdminLayout = () => {
   return (
     <>
       <Navbar />
-      <main>
+      <main className='px-4 lg:px-30 max-w-360 m-auto'>
         <Outlet />
       </main>
     </>

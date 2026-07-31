@@ -13,6 +13,7 @@ import { useAuthStore } from '@/features/auth/store/useAuthStore';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from '../ui/skeleton';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface ProfileDropdownMenuProps {
   user: User;
@@ -24,6 +25,8 @@ export type TabSlug = 'profile' | 'borrowed-list' | 'reviews';
 const ProfileDropdownMenu = ({ user, isLoading }: ProfileDropdownMenuProps) => {
   const navigate = useNavigate();
   const logout = useAuthStore((state) => state.logout);
+  const queryClient = useQueryClient();
+  const role = useAuthStore((state) => state.user?.role);
 
   const handleTabClick = (tab: TabSlug) => {
     const params = new URLSearchParams();
@@ -36,6 +39,7 @@ const ProfileDropdownMenu = ({ user, isLoading }: ProfileDropdownMenuProps) => {
     toast.success('Logged out successfully');
     setTimeout(() => {
       logout();
+      queryClient.clear();
     }, 300);
   };
   return (
@@ -77,12 +81,16 @@ const ProfileDropdownMenu = ({ user, isLoading }: ProfileDropdownMenuProps) => {
           <DropdownMenuItem onClick={() => handleTabClick('profile')}>
             Profile
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleTabClick('borrowed-list')}>
-            Borrowed List
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleTabClick('reviews')}>
-            Reviews
-          </DropdownMenuItem>
+          {role !== 'ADMIN' && (
+            <>
+              <DropdownMenuItem onClick={() => handleTabClick('borrowed-list')}>
+                Borrowed List
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleTabClick('reviews')}>
+                Reviews
+              </DropdownMenuItem>
+            </>
+          )}
           <DropdownMenuItem
             className='text-[#EE1D52]'
             onClick={handleLogoutClick}

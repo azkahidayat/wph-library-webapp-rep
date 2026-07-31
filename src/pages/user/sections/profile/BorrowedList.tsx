@@ -27,6 +27,7 @@ const BorrowedList = () => {
   const [searchParams, setSearchparams] = useSearchParams();
 
   const status = searchParams.get('status');
+  const query = searchParams.get('q') ?? undefined;
   const loanStatus = isLoanStatus(status) ? status : undefined;
   const {
     data,
@@ -35,7 +36,7 @@ const BorrowedList = () => {
     fetchNextPage,
     isFetchingNextPage,
     hasNextPage,
-  } = useGetLoanList({ status: loanStatus });
+  } = useGetLoanList({ q: query, status: loanStatus });
 
   if (error) return <p>{error.message}</p>;
 
@@ -54,7 +55,6 @@ const BorrowedList = () => {
   };
 
   const loans = data?.pages.flatMap((page) => page.data.loans) ?? [];
-  console.log(loans[0]);
 
   const loanFilters: LoanFilter[] = [
     { label: 'All', value: 'all' },
@@ -94,7 +94,7 @@ const BorrowedList = () => {
           );
         })}
       </div>
-      <div className='relative flex flex-col gap-4 pb-15 lg:pb-20'>
+      <div className='relative flex flex-col gap-4 pb-16'>
         {isLoading ? (
           <Skeleton className='h-50 w-full' />
         ) : loans.length > 0 ? (
