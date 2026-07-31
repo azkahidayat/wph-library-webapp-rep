@@ -1,6 +1,9 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
+import AuthLayout from '@/components/layouts/AuthLayout';
 import UserLayout from '@/components/layouts/UserLayout';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
+import LoginPage from '@/pages/auth/LoginPage';
+import RegisterPage from '@/pages/auth/RegisterPage';
 import UserBookByAuthorPage from '@/pages/user/UserBookByAuthorPage';
 import UserCartPage from '@/pages/user/UserCartPage';
 import UserCategoryPage from '@/pages/user/UserCategoryPage';
@@ -12,6 +15,19 @@ import UserSuccessPage from '@/pages/user/UserSuccessPage';
 import { createBrowserRouter } from 'react-router-dom';
 
 export const router = createBrowserRouter([
+  {
+    element: <AuthLayout />,
+    children: [
+      {
+        path: '/auth/login',
+        element: <LoginPage />,
+      },
+      {
+        path: '/auth/register',
+        element: <RegisterPage />,
+      },
+    ],
+  },
   {
     element: <UserLayout />,
     children: [
