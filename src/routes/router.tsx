@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
         element: <UserCategoryPage />,
       },
       {
-        path: '/books/author/:author',
+        path: '/authors/:id/books',
         element: <UserBookByAuthorPage />,
       },
       {
@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
         element: <UserCartPage />,
       },
       {
-        path: '/checkout',
+        path: '/cart/checkout',
         element: <UserCheckoutPage />,
       },
       {

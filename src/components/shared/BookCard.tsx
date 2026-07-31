@@ -1,3 +1,4 @@
+import { CiImageOff } from 'react-icons/ci';
 import { TiStarFullOutline } from 'react-icons/ti';
 import { useNavigate } from 'react-router-dom';
 
@@ -24,11 +25,17 @@ const BookCard = ({ bookDataCard }: BookCardProps) => {
       onClick={() => handleCardClick(bookDataCard.id)}
     >
       <div className='h-64.5 overflow-hidden'>
-        <img
-          src={bookDataCard.coverImage}
-          alt='cover image'
-          className='w-full h-full object-cover'
-        />
+        {bookDataCard.coverImage ? (
+          <img
+            src={bookDataCard.coverImage}
+            alt='cover image'
+            className='w-full h-full object-cover'
+          />
+        ) : (
+          <div className='flex h-full justify-center items-center'>
+            <CiImageOff className='size-10 text-neutral-400' />
+          </div>
+        )}
       </div>
       <div className='flex flex-col gap-0.5 lg:gap-1 p-4'>
         <p className='font-bold text-sm lg:text-lg hover:underline'>

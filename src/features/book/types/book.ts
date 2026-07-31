@@ -1,13 +1,4 @@
-/**------------
- * Shared
- -------------*/
-
-export interface Pagination {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
+import type { Pagination } from '@/types';
 
 /**------------
  * Recommended
@@ -94,4 +85,13 @@ export interface Review {
 export interface UserSummary {
   id: number;
   name: string;
+}
+
+/**------------
+ * Books review
+ -------------*/
+export interface BookReviewData {
+  bookId: number;
+  reviews: Review[];
+  pagination: Pagination;
 }

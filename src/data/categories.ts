@@ -52,7 +52,7 @@ export const categories: Categories[] = [
   },
   {
     id: 5,
-    name: 'Science',
+    name: 'Science & Technology',
     slug: 'science',
     icon: science,
     iconDescription: 'Microscope',

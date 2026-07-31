@@ -1,0 +1,10 @@
+export interface CategoriesData {
+  categories: Category[];
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
