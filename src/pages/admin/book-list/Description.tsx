@@ -11,7 +11,7 @@ const Description = () => {
       </label>
       <Textarea
         id='description'
-        className='h-25'
+        className='h-11xl'
         {...register('description')}
       />
     </div>

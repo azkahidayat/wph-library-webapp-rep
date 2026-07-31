@@ -24,7 +24,9 @@ const DatePicker = () => {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(initialDate);
   const [month, setMonth] = useState<Date | undefined>(initialDate);
-  const [displayValue, setDisplayValue] = useState(formatDate(initialDate));
+  const [displayValue, setDisplayValue] = useState(
+    formatDate({ date: initialDate })
+  );
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -67,7 +69,7 @@ const DatePicker = () => {
                 onSelect={(selectedDate) => {
                   if (!selectedDate) return;
                   setDate(selectedDate);
-                  setDisplayValue(formatDate(selectedDate));
+                  setDisplayValue(formatDate({ date: selectedDate }));
                   setValue('borrowDate', format(selectedDate, 'yyyy-MM-dd'));
                   setOpen(false);
                 }}

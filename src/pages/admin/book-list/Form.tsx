@@ -9,6 +9,7 @@ import SelectCategory from './SelectCategory';
 import { Button } from '@/components/ui/button';
 import Description from './Description';
 import UploadImage from './UploadImage';
+import type { BookAdminPayload } from '@/features/admin/service/bookAdmin.service';
 
 interface InitialValueData {
   title: string;
@@ -26,17 +27,24 @@ interface InitialValueData {
 interface FormProps {
   initialValueData?: InitialValueData;
   isPending: boolean;
+  onSubmitBook: (data: BookAdminPayload) => void;
 }
 
-const Form = ({ initialValueData, isPending }: FormProps) => {
+const Form = ({ initialValueData, isPending, onSubmitBook }: FormProps) => {
   const form = useForm({
     defaultValues: {
       title: initialValueData?.title ?? '',
       authorName: initialValueData?.authorName ?? '',
-      categoryId: initialValueData?.categoryId ?? '',
       isbn: initialValueData?.isbn ?? '',
       publishedYear: initialValueData?.publishedYear ?? undefined,
       description: initialValueData?.description ?? '',
+      // title: 'History of Three Hundred',
+      // authorName: 'Hary300',
+      // isbn: '978-0123456789',
+      // publishedYear: 2024,
+      // description:
+      // 'An in-depth historical account detailing three hundred years of cultural evolution, societal shifts, and monumental achievements. Perfect for history enthusiasts and scholars seeking a comprehensive overview of a key historical era.',
+      categoryId: initialValueData?.categoryId ?? '',
       authorId: initialValueData?.authorId ?? undefined,
       availableCopies: initialValueData?.availableCopies ?? 0,
       totalCopies: initialValueData?.totalCopies ?? 0,
@@ -46,7 +54,16 @@ const Form = ({ initialValueData, isPending }: FormProps) => {
   });
 
   const onSubmit = (data: BookSchema) => {
-    console.log(data);
+    const payload: BookAdminPayload = {
+      title: data.title,
+      categoryId: data.categoryId,
+      isbn: data.isbn,
+      publishedYear: data.publishedYear,
+      authorName: data.authorName,
+      description: data.description ?? undefined,
+      coverImage: data.coverImage ?? undefined,
+    };
+    onSubmitBook(payload);
   };
 
   return (

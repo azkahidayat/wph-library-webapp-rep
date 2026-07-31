@@ -10,11 +10,11 @@ export interface BookAdminPayload {
   title: string;
   isbn: string;
   categoryId: number;
-  authorId?: number;
-  authorName?: string;
-  coverImage?: File;
+  authorName: string;
+  publishedYear: number;
   description?: string;
-  publishedYear?: number;
+  coverImage?: File;
+  authorId?: number;
   totalCopies?: number;
   availableCopies?: number;
 }
@@ -22,10 +22,39 @@ export interface BookAdminPayload {
 export const addBookAdmin = async (
   payload: BookAdminPayload
 ): Promise<ApiResponse<AdminBookData>> => {
+  const formData = new FormData();
+
+  formData.append('title', payload.title);
+  formData.append('isbn', payload.isbn);
+  formData.append('categoryId', String(payload.categoryId));
+  formData.append('authorName', payload.authorName);
+  formData.append('publishedYear', String(payload.publishedYear));
+
+  if (payload.description) {
+    formData.append('description', payload.description);
+  }
+
+  if (payload.coverImage) {
+    formData.append('coverImage', payload.coverImage);
+  }
+
+  if (payload.authorId) {
+    formData.append('authorId', String(payload.authorId));
+  }
+
+  if (payload.totalCopies !== undefined) {
+    formData.append('totalCopies', String(payload.totalCopies));
+  }
+
+  if (payload.availableCopies !== undefined) {
+    formData.append('availableCopies', String(payload.availableCopies));
+  }
+
   const { data } = await api.post<ApiResponse<AdminBookData>>(
     '/books',
-    payload
+    formData
   );
+
   return data;
 };
 
